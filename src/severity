@@ -1,9 +1,7 @@
-#!/usr/bin/python
-"""
+#!/usr/bin/env python3
 
-Highlights Vivado output messages according to their severity
+"""Highlights Vivado output messages according to their severity"""
 
-"""
 import sys
 import re
 
@@ -28,13 +26,6 @@ MESSAGES = {'STATUS' : white,
             'CRITICAL WARNING' : bright_orange,
             'ERROR' : bright_red}
 
-def main():
-    for line in sys.stdin:
-        if is_message(line):
-            sys.stdout.write(colored(line))
-        else:
-            sys.stdout.write(line)
-
 def colored(line):
     # Color the message name
     message, remainder = line.split(":", 1)
@@ -58,5 +49,12 @@ def is_message(line):
     else:
         return False
 
+def main(args):
+    for line in sys.stdin:
+        if is_message(line):
+            sys.stdout.write(colored(line))
+        else:
+            sys.stdout.write(line)
+
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))
