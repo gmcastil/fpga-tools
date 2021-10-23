@@ -16,9 +16,17 @@
 // 
 // Background:
 //
-//   Initial 
-//   - Limitations
-//   - Target platform
+//   It is common when checking out new hardware to want to be able to verify
+//   that clocks and resets are present, control registers are readable and
+//   writable, and that some sort of output is capable of being driven.  This
+//   module attempts to meet this need in a way that is device-independent 
+//   and requires minimal logic resources.  The pattern, and thus the name, is
+//   based on the sequence of prime numbers that is sent as a first contact
+//   message from Vega in the 1997 film Contact.
+//
+// Todo:
+//
+//   - Make pulse and sequence characteristics programmable at runtime
 //
 // ----------------------------------------------------------------------------
 
