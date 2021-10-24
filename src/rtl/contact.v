@@ -27,6 +27,7 @@
 // Todo:
 //
 //   - Make pulse and sequence characteristics programmable at runtime
+//   - Fix the ChipScope ILA instantiation to include signals in the actual RTL
 //
 // ----------------------------------------------------------------------------
 
