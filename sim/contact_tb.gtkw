@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Mon Oct 18 23:06:22 2021
+[*]
+[dumpfile] "/home/georgec/git-repos/fpga-tools/sim/contact_tb.vcd"
+[dumpfile_mtime] "Mon Oct 18 23:03:46 2021"
+[dumpfile_size] 4002
+[savefile] "/home/georgec/git-repos/fpga-tools/sim/contact_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] 224 0
+*-22.051863 5270000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] contact_tb.
+[sst_width] 196
+[signals_width] 330
+[sst_expanded] 1
+[sst_vpaned_height] 155
+@28
+contact_tb.contact_i0.clk
+@22
+contact_tb.contact_i0.global_cnt[31:0]
+contact_tb.contact_i0.major_cnt[31:0]
+contact_tb.contact_i0.minor_cnt[31:0]
+@28
+contact_tb.contact_i0.prime_seq
+@22
+contact_tb.contact_i0.prime_seq_cnt[31:0]
+@23
+contact_tb.contact_i0.prime_idx[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

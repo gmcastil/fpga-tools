@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Important local directories
+rootdir=".."
+rundir=${rootdir}/rundir
+srcdir=${rootdir}/src
+rtldir=${srcdir}/rtl
+incdir=${srcdir}/include
+simdir=${rootdir}/sim
+
+# Simulation tools
+iverilog=/usr/local/bin/iverilog
+vvp=/usr/local/bin/vvp
+gtkwave=/usr/bin/gtkwave
+
+function err() {
+  printf >&2 '[%(%Y-%m-%d %H:%M:%S%z)T] ERROR: %s\n' -1 "$*"
+}
+
+function status() {
+  printf >&2 '[%(%Y-%m-%d %H:%M:%S%z)T] INFO: %s\n' -1 "$*"
+}
+
+# Make sure there is a location for the simulation to run and work out of
+if [[ ! -d ${rundir} ]]; then
+  err "No run directory found"
+  exit 1
+fi
+
+if [[ -f ${rundir}/contact_tb.out ]]; then
+  rm -f ${rundir}/contact_tb.out
+fi
+
+# TODO: Check for existing simulation output products
+
+status "Compiling design sources"
+${iverilog}                               \
+  -g2012                                  \
+  -Wall                                   \
+  -o ${rundir}/contact_tb.out             \
+  ${rtldir}/contact.v                     \
+  ${simdir}/contact_tb.sv
+
+if [[ ! -f ${rundir}/contact_tb.out ]]; then
+  err "Could not find output file at ${rundir}/contact_tb.out"
+  exit 1
+fi
+
+# Run the simulation non-interactively
+status "Running simulation"
+${vvp}                                    \
+  -l ${rundir}/contact_tb.log              \
+  ${rundir}/contact_tb.out                 \
+  -vcd
+
+if [[ -f ${simdir}/contact_tb.vcd ]]; then
+  ${gtkwave} ${simdir}/contact_tb.vcd ${simdir}/contact_tb.gtkw
+else
+  err "No VCD dump found at ${simdir}/contact_tb.sv"
+fi
