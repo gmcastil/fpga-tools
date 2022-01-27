@@ -2,7 +2,8 @@ module contact_wrapper #(
   parameter integer       PULSE_LEN_COUNT         = 32'h007A_1200,
   parameter integer       INTER_PRIME_GAP         = 32'h00F4_2400,
   parameter integer       INTER_SEQUENCE_GAP      = 32'h01E8_4800,
-  parameter integer       ILA_CONTACT_DEBUG       = 1'b0 
+  parameter               RESET_POLARITY          = 1'b1,
+  parameter               ILA_CONTACT_DEBUG       = 1'b0
 )
 (
   input   wire            clk,
@@ -15,6 +16,7 @@ module contact_wrapper #(
     .PULSE_LEN_COUNT      (PULSE_LEN_COUNT),
     .INTER_PRIME_GAP      (INTER_PRIME_GAP),
     .INTER_SEQUENCE_GAP   (INTER_SEQUENCE_GAP),
+    .RESET_POLARITY       (RESET_POLARITY),
     .ILA_CONTACT_DEBUG    (ILA_CONTACT_DEBUG)
   )
   contact_i0 (

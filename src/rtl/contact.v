@@ -6,20 +6,20 @@
 //
 // Description: Heartbeat module for debug and hardware checkout purposes
 //
-// Usage: 
+// Usage:
 //
 //   Simply instantiate the module along with an appropriate clock and
 //   instantiation parameters matching the desired heartbeat characteristics.
 //   The default values were intended to be paired with an 8 MHz clock and
 //   yield relatively useful visual feedback to a user. It is recommended that
 //   a synchronous reset be applied as well
-// 
+//
 // Background:
 //
 //   It is common when checking out new hardware to want to be able to verify
 //   that clocks and resets are present, control registers are readable and
 //   writable, and that some sort of output is capable of being driven.  This
-//   module attempts to meet this need in a way that is device-independent 
+//   module attempts to meet this need in a way that is device-independent
 //   and requires minimal logic resources.  The pattern, and thus the name, is
 //   based on the sequence of prime numbers that is sent as a first contact
 //   message from Vega in the 1997 film Contact.
@@ -27,7 +27,6 @@
 // Todo:
 //
 //   - Make pulse and sequence characteristics programmable at runtime
-//   - Fix the ChipScope ILA instantiation to include signals in the actual RTL
 //
 // ----------------------------------------------------------------------------
 
@@ -43,15 +42,17 @@ module contact #(
   // this should be some multiple of `INTER_PRIME_GAP` to make the sequence of
   // prime numbers obvious
   parameter integer       INTER_SEQUENCE_GAP      = 32'h01E8_4800,
+  // For an active high reset, set this to 1'b1, for active low set to 1'b0
+  parameter               RESET_POLARITY          = 1'b1,
   // Set this to enable an ILA core for this module if desired and supported
   // by the target technology (e.g., Xilinx)
-  parameter integer       ILA_CONTACT_DEBUG       = 1'b0 
+  parameter               ILA_CONTACT_DEBUG       = 1'b0
 )
 (
   input   wire            clk,
-  // Reset synchronous to the rising edge of `clk`
+  // Reset polarity determined by RESET_POLARITY parameter
   input   wire            rst,
-
+  // Sequential output pulse of the first NUM_PRIMES numbers
   output  reg             prime_seq,
   // Number of prime number sequences completed since reset
   output  reg [31:0]      prime_seq_cnt
@@ -64,7 +65,7 @@ module contact #(
   localparam S1 = 32'd1;
   localparam S2 = 32'd2;
   localparam S3 = 32'd3;
-  
+
   // synthesis translate_off
   reg  [15:0]       prime_state_ascii;
   always @(*) begin
@@ -84,7 +85,8 @@ module contact #(
   reg   [31:0]      prime_state;
 
   always @(posedge clk) begin
-    if ( rst == 1'b1 ) begin
+
+    if ( rst == RESET_POLARITY ) begin
 
       prime_seq               <= 1'b0;
       prime_seq_cnt           <= 32'd0;
@@ -173,13 +175,13 @@ module contact #(
       //)
       ila_contact_i0 (
         .clk         (clk),
-        .probe0      (rst),
-        .probe1      (prime_seq),
-        .probe2      (prime_seq_cnt),
-        .probe3      (pulse_cnt),
-        .probe4      (prime_cnt),
-        .probe5      (prime_idx),
-        .probe6      (prime_state)
+        .probe0      (rst),            // reg
+        .probe1      (prime_seq),      // reg
+        .probe2      (prime_seq_cnt),  // reg [31:0]
+        .probe3      (pulse_cnt),      // reg [31:0]
+        .probe4      (prime_cnt),      // reg [31:0]
+        .probe5      (prime_idx),      // reg [31:0]
+        .probe6      (prime_state)     // reg [31:0]
       ) /* synthesis syn_keep=1 syn_preserve=1 syn_noprune */;
     end
   endgenerate
