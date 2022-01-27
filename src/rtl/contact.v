@@ -27,6 +27,7 @@
 // Todo:
 //
 //   - Make pulse and sequence characteristics programmable at runtime
+//   - Add an AXI bus and a parameter to configure it directly via AXI
 //
 // ----------------------------------------------------------------------------
 
