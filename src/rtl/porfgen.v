@@ -52,7 +52,7 @@ module porfgen #(
           FDPE #(
             .INIT             (1'b1)
           )
-          fdpe_inst (
+          fdpe_i0 (
             .PRE              (rst_start),
             .D                (rst_chain[i]),
             .C                (clk),
@@ -71,7 +71,7 @@ module porfgen #(
             .IS_D_INVERTED    (1'b0),
             .IS_PRE_INVERTED  (1'b0)
           )
-          fdpe_inst (
+          fdpe_i0 (
             .PRE              (rst_start),
             .D                (rst_chain[i]),
             .C                (clk),
