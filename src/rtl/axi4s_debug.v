@@ -1,11 +1,11 @@
 module axi4s_debug #(
 	// AXI4 stream parameters (all in bits)
-	parameter	integer		TDATA_WIDTH			32,
-	parameter	integer		TID_WIDTH				1,
-	parameter	integer		TDEST_WIDTH			4,
-	parameter	integer		TUSER_WIDTH			4,
+	parameter	integer		TDATA_WIDTH			= 32,
+	parameter	integer		TID_WIDTH				= 1,
+	parameter	integer		TDEST_WIDTH			= 4,
+	parameter	integer		TUSER_WIDTH			= 4,
 	// Instrument the AXI4 stream bus with an ILA
-	parameter	integer		ILA_ENABLE			1
+	parameter	integer		ILA_ENABLE			= 1
 )
 (
 	input		wire														axi4s_aclk,
@@ -35,7 +35,7 @@ module axi4s_debug #(
 	    axi4s_tlast_red		<= 1'b0;
     end else begin
       axi4s_tlast_q     <= axi4s_tlast;
-      axi4s_tlast_qq    <= axi4s_q;
+      axi4s_tlast_qq    <= axi4s_tlast_q;
       if ( ( axi4s_tlast_qq === 1'b0 ) && ( axi4s_tlast_q == 1'b1) ) begin
         axi4s_tlast_red <= 1'b1;
       end else begin
