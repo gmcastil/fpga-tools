@@ -10,9 +10,9 @@
 //
 //   Simply instantiate the module along with an appropriate clock and
 //   instantiation parameters matching the desired heartbeat characteristics.
-//   The default values were intended to be paired with an 8 MHz clock and
-//   yield relatively useful visual feedback to a user. It is recommended that
-//   a synchronous reset be applied as well
+//   Default values are set to assume a 33.333MHz input clock and create a
+//   250ms blink duration, with 500ms between prime numbers, and a 1000ms
+//   interval between sequence repetitions.
 //
 // Background:
 //
@@ -34,15 +34,15 @@
 module contact #(
   // Number of clock cycles determining the duration that the output pulse is
   // held high and low
-  parameter integer       PULSE_LEN_COUNT         = 32'h007A_1200,
+  parameter integer       PULSE_LEN_COUNT         = 32'h007F_27C2,
   // Number of clock cycles between each prime number in a sequence.
   // Generally, this should be some multiple of `PULSE_LEN_COUNT` to make
   // individual prime numbers discernible
-  parameter integer       INTER_PRIME_GAP         = 32'h00F4_2400,
+  parameter integer       INTER_PRIME_GAP         = 32'h00FE_4F84,
   // Number of clock cycles between each sequence of prime numbers. Generally,
   // this should be some multiple of `INTER_PRIME_GAP` to make the sequence of
   // prime numbers obvious
-  parameter integer       INTER_SEQUENCE_GAP      = 32'h01E8_4800,
+  parameter integer       INTER_SEQUENCE_GAP      = 32'h01FC_9F08,
   // For an active high reset, set this to 1'b1, for active low set to 1'b0
   parameter               RESET_POLARITY          = 1'b1,
   // Set this to enable an ILA core for this module if desired and supported

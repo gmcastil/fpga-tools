@@ -1,7 +1,7 @@
 module contact_wrapper #(
-  parameter integer       PULSE_LEN_COUNT         = 32'h007A_1200,
-  parameter integer       INTER_PRIME_GAP         = 32'h00F4_2400,
-  parameter integer       INTER_SEQUENCE_GAP      = 32'h01E8_4800,
+  parameter integer       PULSE_LEN_COUNT         = 32'h007F_27C2,
+  parameter integer       INTER_PRIME_GAP         = 32'h00FE_4F84,
+  parameter integer       INTER_SEQUENCE_GAP      = 32'h01FC_9F08,
   parameter               RESET_POLARITY          = 1'b1,
   parameter               ILA_CONTACT_DEBUG       = 1'b0
 )
