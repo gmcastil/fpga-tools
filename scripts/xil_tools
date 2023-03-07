@@ -1,0 +1,27 @@
+#!/bin/bash
+
+GREP=$(command -v grep)
+READLINK=$(command -v readlink)
+WC=$(command -v wc)
+
+# Print the a summary of a Xilinx synthesis or implementation log
+function xil_summary () {
+  local log_file
+  log_file="${1}"
+  if [[ ! -r "${log_file}" ]]; then
+    builtin printf "No log filename supplied or file is not readable\n"
+    return 1
+  else
+    builtin printf "Log file at %s\n" "$("${READLINK}" -f "${log_file}")"
+  fi
+  info_cnt="$(${GREP} ^INFO "${log_file}" | "${WC}" -l)"
+  warn_cnt="$(${GREP} ^WARN "${log_file}" | "${WC}" -l)"
+  crit_cnt="$(${GREP} ^CRITICAL "${log_file}" | "${WC}" -l)"
+  error_cnt="$(${GREP} ^ERROR "${log_file}" | "${WC}" -l)"
+  builtin printf "  %-20s%-5d\n" "Info" "${info_cnt}"
+  builtin printf "  %-20s%-5d\n" "Warning" "${warn_cnt}"
+  builtin printf "  %-20s%-5d\n" "Critical Warning" "${crit_cnt}"
+  builtin printf "  %-20s%-5d\n" "Errors" "${error_cnt}"
+  return 0
+}
+     
